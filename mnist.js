@@ -24,28 +24,29 @@ async function main(argvs){
 		train_datas.images.shape[0] * (1 - validationSplit);
 	const numTrainBatchesPerEpoch =
 		Math.ceil(numTrainExamplesPerEpoch / swc.argvs.batchSize);
-
 	console.log("training")
 
-	await model.fit(train_datas.images, train_datas.labels, {
-		epochs : swc.argvs.epochs,
-		batchSize : swc.argvs.batchSize,
-		validationSplit
-	});
+	console.log(train_datas.labels.get(1))
 
-	console.log("evaluate");
+	// await model.fit(train_datas.images, train_datas.labels, {
+	// 	epochs : swc.argvs.epochs,
+	// 	batchSize : swc.argvs.batchSize,
+	// 	validationSplit
+	// });
 
-	const test_data = await data.get_data(swc, false);
-	const evalOutput = model.evaluate(test_data.images, test_data.labels);
-	console.log(
-      `\nEvaluation result:\n` +
-      `  Loss = ${evalOutput[0].dataSync()[0].toFixed(3)}; `+
-      `Accuracy = ${evalOutput[1].dataSync()[0].toFixed(3)}`);
+	// console.log("evaluate");
 
-	if (swc.argvs.model_save_path != null) {
-		await model.save(`${swc.argvs.model_save_path}`);
-		console.log(`Saved model to path: ${swc.argvs.model_save_path}`);
-	}
+	// const test_data = await data.get_data(swc, false);
+	// const evalOutput = model.evaluate(test_data.images, test_data.labels);
+	// console.log(
+ //      `\nEvaluation result:\n` +
+ //      `  Loss = ${evalOutput[0].dataSync()[0].toFixed(3)}; `+
+ //      `Accuracy = ${evalOutput[1].dataSync()[0].toFixed(3)}`);
+
+	// if (swc.argvs.model_save_path != null) {
+	// 	await model.save(`${swc.argvs.model_save_path}`);
+	// 	console.log(`Saved model to path: ${swc.argvs.model_save_path}`);
+	// }
 }
 
 main(argvs);
