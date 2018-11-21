@@ -102,13 +102,8 @@ function get_data(){
 		[10, 12, 15, 25, 26, 27, 14]];
 
 	var result = {
-		req : [],
-		res : []
-	}
-
-	for(var i=0;i<data.length-1;i++){
-		result.req.push(data[i]);
-		result.res.push(data[i+1]);
+		req : [[1,2], [2,3], [3,4], [4,5]],
+		res : [[3], [5], [7], [9]]
 	}
 
 	return result;
@@ -116,7 +111,7 @@ function get_data(){
 
 async function main(){
 	const model = tf.sequential();
-	model.add(tf.layers.dense({units: 7, inputShape: [7]}));
+	model.add(tf.layers.dense({units: 1, inputShape: [2]}));
 	model.compile({optimizer: 'sgd', loss: 'meanSquaredError'});
 
 	// Generate some synthetic data for training.
@@ -125,10 +120,10 @@ async function main(){
 	const ys = tf.tensor(data.res);
 
 	// // Train model with fit().
-	await model.fit(xs, ys, {epochs: 1});
+	await model.fit(xs, ys, {epochs: 10});
 
 	// // Run inference with predict();
-	model.predict(tf.tensor([[10, 12, 15, 25, 26, 27, 14]])).print();
+	model.predict(tf.tensor([[1,1]])).print();
 
 	// const test = tf.tensor([[1,2]]);
 	// console.log(test.shape);
